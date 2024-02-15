@@ -8,6 +8,7 @@ import './index.css';
 // react router
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './components/auth/Login.jsx';
+import { DetectDisease } from './components/disease_detection/DetectDisease.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      // {
+      //   path: "detect-disease",
+      //   element: <DetectDisease />
+      // },
       {
         path: "contacts/:contactID",
         element: <div>Hello Contact</div>
@@ -26,13 +31,18 @@ const router = createBrowserRouter([
     ]
   },
   {
+    path: "detect-disease",
+    element: <DetectDisease />
+  },
+  {
     path: "registration",
     element: <Registration />
   },
   {
     path: "login",
     element: <Login />
-  }
+  },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -3,6 +3,7 @@ import './App.css';
 import dashboardImage from './assets/images/about1.png';
 import { Outlet, Link } from 'react-router-dom';
 import Nav from './components/common/nav';
+import { Footer } from './components/misc/Footer';
 
 function App() {
   // login
@@ -29,11 +30,7 @@ function App() {
               <button className='dashboard-btn'>Diagnose Now</button>
             </div>
           </div>
-          <div className="row">
-            <div className="col copyright-container">
-              <span className='lead copyright-text'>Copyright &copy; 2024 Prajwal Pokhrel. All Rights Reserved. </span>
-            </div>
-          </div>
+          <Footer />
       </div>
 
       {/* <Link to={'contacts/1'}>Go To Link</Link> */}
