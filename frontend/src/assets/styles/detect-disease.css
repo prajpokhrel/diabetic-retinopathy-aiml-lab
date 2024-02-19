@@ -77,3 +77,35 @@
   border-color: #2196F3 !important;
   color: #2196F3 !important; /* Change hover color to green */
 }
+
+/* Detect disease dashboard */
+.title-text-bottom {
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+.dr-image {
+  height: auto;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.left-col-wrapper .dr-image {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-col-wrapper {
+  padding-top: 40px;
+}
+
+.main-text {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.title-text {
+  font-size: 24px;
+}

@@ -70,7 +70,7 @@ export const DetectDisease = () => {
           
           <div className="col-lg-6 right-wrapper">
             <div className="right-circle">
-              <img id='right-image' src={SampleImage} alt="predicted image" />
+              {/* <img id='right-image' src={SampleImage} alt="predicted image" /> */}
             </div>
             {uploadedImage && (
               <Button size='large' className="predict-image-btn" onClick={handleChangeImage}>Predict Lesions</Button>

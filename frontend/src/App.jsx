@@ -27,7 +27,11 @@ function App() {
             <div className="col-sm-4 right-dashboard">
               <span className='lead'>Caring for better life</span>
               <h1 className='dashboard-text'>Leading the way in medical excellence.</h1>
-              <button className='dashboard-btn'>Diagnose Now</button>
+              <Link to={'dashboard'}>
+                <button className='dashboard-btn'>
+                  Diagnose Now
+                </button>
+              </Link>
             </div>
           </div>
           <Footer />
