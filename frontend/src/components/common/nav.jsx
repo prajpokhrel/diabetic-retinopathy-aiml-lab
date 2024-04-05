@@ -14,10 +14,10 @@ export default function Nav() {
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   {/* <a className="nav-link active" aria-current="page" href="#">Login</a> */}
-                  <Link to={'login'} className="nav-link" aria-current="page" href="#">Login</Link>
+                  <Link to={'/login'} className="nav-link" aria-current="page" href="#">Login</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'registration'} className="nav-link" aria-current="page">Register</Link>
+                  <Link to={'/register'} className="nav-link" aria-current="page">Register</Link>
                 </li>
               </ul>
             </div>

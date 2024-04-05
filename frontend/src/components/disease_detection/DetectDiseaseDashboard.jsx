@@ -8,7 +8,7 @@ import { Footer } from '../misc/Footer';
 
 const { Meta } = Card;
 
-export const DetectDiseaseDashboard = () => {
+const DetectDiseaseDashboard = () => {
 
   const cardDetails = [
     {
@@ -78,3 +78,5 @@ export const DetectDiseaseDashboard = () => {
     </>
   );
 };
+
+export default DetectDiseaseDashboard;

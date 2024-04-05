@@ -9,7 +9,7 @@ import { CloseOutlined, InboxOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
 
-export const DetectDisease = () => {
+const DetectDisease = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const handleImageUpload = (info) => {
@@ -84,3 +84,4 @@ export const DetectDisease = () => {
   );
 };
 
+export default DetectDisease;
