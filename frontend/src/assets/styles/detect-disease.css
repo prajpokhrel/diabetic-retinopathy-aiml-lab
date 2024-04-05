@@ -10,6 +10,10 @@
   /* font-size: 1.2rem; */
 }
 
+.patient-add-button {
+  float: right;
+}
+
 .left-wrapper, .right-wrapper {
   display: flex;
   justify-content: center;

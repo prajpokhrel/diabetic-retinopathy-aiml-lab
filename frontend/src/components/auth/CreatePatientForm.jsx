@@ -1,7 +1,5 @@
-import { useState } from "react";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 import "../../assets/styles/Form.css"
 
 // antd 
@@ -9,42 +7,48 @@ import { Button, Form, Input } from 'antd';
 import TextArea from "antd/es/input/TextArea";
 
 function CreatePatientForm({ route, method }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
+        try {
+            const response = await api.post("/api/patients/", {...values});
+            if (response.status === 201) {
+                navigate('/patients');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
     
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
-    const name = method === "login" ? "Login" : "Register";
+    // const name = method === "login" ? "Login" : "Register";
 
-    const handleSubmit = async (e) => {
-        setLoading(true);
-        e.preventDefault();
+    // const handleSubmit = async (e) => {
+    //     setLoading(true);
+    //     e.preventDefault();
 
-        try {
-            const res = await api.post(route, { username, password })
-            console.log(res)
-            if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/")
-            } else {
-                navigate("/login")
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error)
-        } finally {
-            setLoading(false)
-        }
-    };
+    //     try {
+    //         const res = await api.post(route, { username, password })
+    //         console.log(res)
+    //         if (method === "login") {
+    //             localStorage.setItem(ACCESS_TOKEN, res.data.access);
+    //             localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+    //             navigate("/")
+    //         } else {
+    //             navigate("/login")
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         alert(error)
+    //     } finally {
+    //         setLoading(false)
+    //     }
+    // };
 
     return (
         <Form
@@ -88,12 +92,12 @@ function CreatePatientForm({ route, method }) {
                 name="age"
                 rules={[
                     {
-                      type: 'number',
-                      message: 'Please enter a valid age'
+                        pattern: new RegExp(/^[0-9]+$/),
+                        message: 'Please enter a valid age'
                     },
                     {
-                    required: true,
-                    message: 'Please enter the age.',
+                        required: true,
+                        message: 'Please enter the age.',
                     },
                 ]}
             >

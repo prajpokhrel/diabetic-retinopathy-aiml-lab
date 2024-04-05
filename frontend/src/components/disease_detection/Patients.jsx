@@ -4,27 +4,32 @@ import DR_Image from '../../assets/images/retina_pic.jpg'
 import EYE_IMAGE from '../../assets/images/eye_vector.jpg'
 import { Footer } from '../misc/Footer';
 import { Button, Table, Flex } from 'antd';
+import { Link } from 'react-router-dom';
+import api from '../../api';
+import { useState, useEffect } from 'react';
 
-const DetectDiseaseDashboard = () => {
 
-  const data = [
-    {
-      key: '1',
-      first_name: 'Prajwal',
-      last_name: 'Pokhrel',
-      age: 32,
-      passport_number: 123213,
-      diagnosis: 'Have a severe diabetic retinopathy',
-    },
-    {
-      key: '1',
-      first_name: 'Prajwal',
-      last_name: 'Pokhrel',
-      age: 32,
-      passport_number: 123213,
-      diagnosis: 'Have a severe diabetic retinopathy',
+function Patients() {
+  const [patientsData, setPatientsData] = useState([]);
+
+  const formattedDate = (date) => {
+    return new Date(date).toLocaleDateString("en-US")
+  }
+
+  useEffect(() => {
+    getPatients();
+  }, []);
+
+  const getPatients = async () => {
+    try {
+      const response = await api.get("/api/patients/");
+      if (response.status === 200) {
+        setPatientsData(response.data);
+      }
+    } catch (error) {
+      console.log(error.response.data)
     }
-  ];
+  }
 
   const columns = [
     {
@@ -53,6 +58,14 @@ const DetectDiseaseDashboard = () => {
       key: 'diagnosis',
     },
     {
+      title: 'Checked On',
+      dataIndex: 'created_at',
+      key: 'created_at',
+      render: (data) => {
+        return formattedDate(data);
+      }
+    },
+    {
       title: 'Action',
       key: 'action',
       render: () => (
@@ -71,29 +84,27 @@ const DetectDiseaseDashboard = () => {
       <Nav />
       <div className="container-fluid">
         <div className="row mt-2">
-          {/* <h1 className='display-4 lead'>
-            Welcome,
-          </h1> */}
           <h1 className='lead text-center main-text'>Diabetic Retinopathy: Retinal Lesions Segmentation</h1>
           <div className="col-sm-4 left-col-wrapper">
-            {/* <h1 className='lead title-text-bottom'>
-              {'"Better vision for the better future"'}
-            </h1> */}
-
             <img src={EYE_IMAGE} alt="de image" className='dr-image'/>
           </div>
-          <div className="col-sm-8 right-col-wrapper">
+          <div className="col-sm-8 right-col-wrapper"> 
             <h1 className='lead title-text'>
               {'Patients'}
             </h1>
-            {/* Here goes the table */}
-            <Table columns={columns} dataSource={data} />
+            <div className='row patient-add-button'>
+              <Link to={'/create-patient'}>
+                <Button className='text-right' type="primary" size='large'>Add Patient</Button>
+              </Link>
+              
+            </div>
+            <Table columns={columns} dataSource={patientsData} />
           </div>
         </div>
       </div>
       <Footer />
     </>
   );
-};
+}
 
-export default DetectDiseaseDashboard;
+export default Patients;

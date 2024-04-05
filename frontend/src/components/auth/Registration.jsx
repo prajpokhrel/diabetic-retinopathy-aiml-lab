@@ -10,9 +10,9 @@ function Register() {
       
       <div className='container-fluid wrapper'>
         <div className='row mt-5'>
-            <div className="col-sm-6 form-wrapper bg-red">
+            <div className="col-sm-4 form-wrapper bg-red">
               <h1 className="lead title-text text-center">Sign Up</h1>
-              <FormWrapper route="/api/user/register" method="register" />
+              <FormWrapper route="/api/user/register/" method="register" />
             </div>
           </div>
           <Footer />

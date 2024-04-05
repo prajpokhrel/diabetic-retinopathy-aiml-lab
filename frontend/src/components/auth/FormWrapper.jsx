@@ -6,16 +6,48 @@ import "../../assets/styles/Form.css"
 import LoadingIndicator from "../common/LoadingIndicator";
 
 // antd 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Alert } from 'antd';
 
 function FormWrapper({ route, method }) {
     // const [username, setUsername] = useState("");
     // const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [errors, setErrors] = useState([]);
 
-    const onFinish = (values) => {
+    const getValues = (errors) => {
+        const valuesArray = [];
+        Object.keys(errors).forEach(key => {
+          const value = errors[key];
+          if (Array.isArray(value)) {
+            valuesArray.push(...value);
+          } else {
+            valuesArray.push(value);
+          }
+        });
+      
+        return valuesArray;
+      }
+
+    const onFinish = async (values) => {
         console.log('Success:', values);
+        try {
+            const res = await api.post(route, {...values})
+            // console.log(res);
+            if (method === "login") {
+                localStorage.setItem(ACCESS_TOKEN, res.data.access);
+                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                navigate("/dashboard")
+            } else {
+                navigate("/login")
+            }
+        } catch (error) {
+            console.log(error.response.data);
+            setErrors(getValues(error?.response?.data));
+            alert(error)
+        } finally {
+            setLoading(false)
+        }
     };
     
     const onFinishFailed = (errorInfo) => {
@@ -25,139 +57,100 @@ function FormWrapper({ route, method }) {
     const name = method === "login" ? "Login" : "Register";
     const register = method === "register";
 
-    const handleSubmit = async (e) => {
-        setLoading(true);
-        e.preventDefault();
-
-        try {
-            const res = await api.post(route, { username, password })
-            console.log(res)
-            if (method === "login") {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access);
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/")
-            } else {
-                navigate("/login")
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error)
-        } finally {
-            setLoading(false)
-        }
-    };
-
     return (
-        <Form
-            name="basic"
-            size="large"
-            labelCol={{
-                span: 24,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-        >
-
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[
-                    {
-                    required: true,
-                    message: 'Please enter your username.',
-                    },
-                ]}
-            >
-                <Input placeholder="Enter your username."/>
-            </Form.Item>
-
+        <>
             {
-                register && (
-                    <>
-                        <Form.Item
-                            label="First Name"
-                            name="first_name"
-                            rules={[
-                                {
-                                required: true,
-                                message: 'Please enter your first name.',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Enter your first name."/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Last Name"
-                            name="last_name"
-                            rules={[
-                                {
-                                required: true,
-                                message: 'Please enter your last name.',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Enter your last name."/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            type
-                            rules={[
-                                {
-                                    type: 'email',
-                                    message: 'Please enter a valid email.'
-                                },
-                                {
-                                    required: true,
-                                    message: 'Please enter your email.',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Enter your email."/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="License Number"
-                            name="license_number"
-                            type
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter your medical license number.',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Enter your license number."/>
-                        </Form.Item>
-                    
-                    </>
+                errors.length !== 0 && (
+                    errors.map((error, index) => {
+                        return (
+                            <Alert key={index} message={error} type="error" closable/>
+                        )                        
+                    })
                 )
-            }            
+            }
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                    {
-                    required: true,
-                    message: 'Please input your password!',
-                    },
-                ]}
+            <Form
+                name="basic"
+                size="large"
+                labelCol={{
+                    span: 24,
+                }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
             >
-                <Input.Password placeholder="Enter your password." />
-            </Form.Item>
+
+                <Form.Item
+                    label="Email"
+                    name="username"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: 'Please enter a valid email.'
+                        },
+                        {
+                        required: true,
+                        message: 'Please enter your email.',
+                        },
+                    ]}
+                >
+                    <Input placeholder="Enter your email."/>
+                </Form.Item>
+
+                {
+                    register && (
+                        <>
+                            <Form.Item
+                                label="First Name"
+                                name="first_name"
+                                rules={[
+                                    {
+                                    required: true,
+                                    message: 'Please enter your first name.',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Enter your first name."/>
+                            </Form.Item>
+
+                            <Form.Item
+                                label="Last Name"
+                                name="last_name"
+                                rules={[
+                                    {
+                                    required: true,
+                                    message: 'Please enter your last name.',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Enter your last name."/>
+                            </Form.Item>
+                        </>
+                    )
+                }            
+
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[
+                        {
+                        required: true,
+                        message: 'Please input your password!',
+                        },
+                    ]}
+                >
+                    <Input.Password placeholder="Enter your password." />
+                </Form.Item>
 
 
-            <Form.Item>
-                {/* loading */}
-                <Button type="primary" htmlType="submit" block>
-                    {name}
-                </Button>
-            </Form.Item>
-        </Form>
+                <Form.Item>
+                    {/* loading */}
+                    <Button type="primary" htmlType="submit" block>
+                        {name}
+                    </Button>
+                </Form.Item>
+            </Form>
+        </>
     );
 
     // return (

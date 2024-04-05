@@ -11,7 +11,7 @@ function Login() {
       {/* main body */}
       <div className='container-fluid wrapper'>
         <div className='row mt-5'>
-            <div className="col-sm-6 form-wrapper bg-red">
+            <div className="col-sm-4 form-wrapper bg-red">
               <h1 className="lead title-text text-center">Sign In</h1>
               <FormWrapper route="/api/token/" method="login" />
             </div>
