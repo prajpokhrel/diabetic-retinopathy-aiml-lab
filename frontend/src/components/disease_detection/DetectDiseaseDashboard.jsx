@@ -55,7 +55,7 @@ export const DetectDiseaseDashboard = () => {
                   return (
                     <>
                       <Col span={12}>
-                        <Card title={<> <Avatar size='large' src={DR_Avatar} /> {item?.title}</>} bordered={false}>
+                        <Card className='card-column' title={<> <Avatar size='large' src={DR_Avatar} /> {item?.title}</>} bordered={false}>
                           
                           <div className="row">
                             <Button icon={<RightCircleOutlined />} type='primary' size='large' ghost>Diagnose</Button>
@@ -75,7 +75,6 @@ export const DetectDiseaseDashboard = () => {
         </div>
       </div>
       {/* <Footer /> */}
-
     </>
   );
 };

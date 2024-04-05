@@ -109,3 +109,7 @@
 .title-text {
   font-size: 24px;
 }
+
+.card-column {
+  margin-top: 10px !important;
+}
