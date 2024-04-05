@@ -7,6 +7,8 @@ import Home from './components/system/Home';
 import NotFound from './components/system/NotFound';
 import DetectDiseaseDashboard from './components/disease_detection/DetectDiseaseDashboard';
 import DetectDisease from './components/disease_detection/DetectDisease';
+import Patients from './components/disease_detection/Patients';
+import CreatePatient from './components/disease_detection/CreatePatients';
 
 function Logout() {
   localStorage.clear()
@@ -59,6 +61,22 @@ function App() {
           element={
             // <ProtectedRoute>
               <DetectDisease />
+            // </ProtectedRoute>
+        }
+        />
+        <Route 
+          path='/patients'
+          element={
+            // <ProtectedRoute>
+              <Patients />
+            // </ProtectedRoute>
+        }
+        />
+        <Route 
+          path='/create-patient'
+          element={
+            // <ProtectedRoute>
+              <CreatePatient />
             // </ProtectedRoute>
         }
         />

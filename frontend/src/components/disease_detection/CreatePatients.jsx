@@ -1,28 +1,24 @@
-import FormWrapper from "./FormWrapper";
+import CreatePatientForm from "../auth/CreatePatientForm";
 import { Footer } from "../misc/Footer";
 import Nav from "../common/nav";
 import '../../assets/styles/form-common.css';
 
-function Login() {
+function CreatePatients() {
   return (
     <>
       <Nav />
       
-      {/* main body */}
       <div className='container-fluid wrapper'>
         <div className='row mt-5'>
             <div className="col-sm-6 form-wrapper bg-red">
-              <h1 className="lead title-text text-center">Sign In</h1>
-              <FormWrapper route="/api/token/" method="login" />
+              <h1 className="lead title-text text-center">Add Patient</h1>
+              <CreatePatientForm route='some/route' method='add' />
             </div>
           </div>
           <Footer />
       </div>
-
-
-      
     </>
   )
 }
 
-export default Login;
+export default CreatePatients;
