@@ -6,13 +6,21 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from.models import Patient
 
 # Create your views here.
+class UserList(generics.ListAPIView):
+  serializer_class = UserSerializer
+  permission_classes = [IsAuthenticated]
+
+  def get_queryset(self):
+    user = self.request.user
+    return User.objects.filter(username = user)
+
 class PatientListCreate(generics.ListCreateAPIView):
   serializer_class = PatientSerializer
   permission_classes = [IsAuthenticated]
 
   def get_queryset(self):
     user = self.request.user
-    return Patient.objects.filter(doctor = user)
+    return Patient.objects.filter(doctor = user).order_by('-created_at')
 
   def perform_create(self, serializer):
     if serializer.is_valid():
