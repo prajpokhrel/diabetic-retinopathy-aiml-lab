@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import api from '../../api';
 import { useState, useEffect } from 'react';
 
-
 function Patients() {
   const [patientsData, setPatientsData] = useState([]);
 
@@ -30,6 +29,17 @@ function Patients() {
       console.log(error.response.data)
     }
   }
+
+  const deletePatients = async (id) => {
+    try {
+      const response = await api.delete(`/api/patient/delete/${id}/`);
+      if (response.status === 204) {
+        await getPatients();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const columns = [
     {
@@ -68,11 +78,11 @@ function Patients() {
     {
       title: 'Action',
       key: 'action',
-      render: () => (
+      render: (data) => (
         <>
         <Flex wrap="wrap" gap="small">
           <Button type="primary" size='large'>update</Button>
-          <Button type="primary" size='large' danger>delete</Button>
+          <Button type="primary" onClick={() => deletePatients(data.id)} size='large' danger>delete</Button>
         </Flex>
         </>
       ),
