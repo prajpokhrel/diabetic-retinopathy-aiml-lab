@@ -13,3 +13,10 @@ class Patient(models.Model):
 
   def __str__(self):
     return self.passport_number
+
+class LesionImage(models.Model):
+    lesion_type = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='post_images')
+    
+    def __str__(self):
+        return self.lesion_type

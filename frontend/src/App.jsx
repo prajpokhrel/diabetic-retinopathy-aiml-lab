@@ -21,14 +21,6 @@ function RegisterAndLogout() {
 }
 
 function App() {
-  // login
-  // register
-  // main dashboard
-  // dashboard after login
-  // add, list, delete, update patients
-  // register, update profile doctors
-  // prediction dashboard - assign to patient details, save result
-
   return (
     <BrowserRouter>
       <Routes>
@@ -51,33 +43,33 @@ function App() {
         <Route 
           path='/dashboard'
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <DetectDiseaseDashboard />
-            // </ProtectedRoute>
+            </ProtectedRoute>
         }
         />
         <Route 
           path='/detect-disease'
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <DetectDisease />
-            // </ProtectedRoute>
+            </ProtectedRoute>
         }
         />
         <Route 
           path='/patients'
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <Patients />
-            // </ProtectedRoute>
+            </ProtectedRoute>
         }
         />
         <Route 
           path='/create-patient'
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <CreatePatient />
-            // </ProtectedRoute>
+            </ProtectedRoute>
         }
         />
         <Route 
@@ -86,32 +78,6 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-    // <>
-    //   <Nav />
-      
-    //   {/* main body */}
-    //   <div className='container-fluid wrapper'>
-    //     <div className='row'>
-    //       <div className="col-sm-8 left-dashboard">
-    //           <img src={dashboardImage} alt="dashboard-about" className='dashboard-image'/>
-    //         </div>
-    //         <div className="col-sm-4 right-dashboard">
-    //           <span className='lead'>Caring for better life</span>
-    //           <h1 className='dashboard-text'>Leading the way in medical excellence.</h1>
-    //           <Link to={'dashboard'}>
-    //             <button className='dashboard-btn'>
-    //               Diagnose Now
-    //             </button>
-    //           </Link>
-    //         </div>
-    //       </div>
-    //       <Footer />
-    //   </div>
-
-    //   {/* <Link to={'contacts/1'}>Go To Link</Link> */}
-
-    //   <Outlet />
-    // </>
   );
 }
 
