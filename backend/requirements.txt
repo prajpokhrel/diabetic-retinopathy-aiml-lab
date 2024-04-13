@@ -10,3 +10,4 @@ psycopg2-binary
 python-dotenv
 tensorflow==2.15.0
 Pillow
+keras==3.1.1
