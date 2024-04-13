@@ -33,7 +33,7 @@ class UploadImage(APIView):
           lesion_type = serializer.validated_data['lesion_type']
           # Save the image to a folder
           input_image = Image.open(BytesIO(image_data.read()))
-          predicted_image = generate_and_combine_patches(input_image)
+          predicted_image = generate_and_combine_patches(input_image, lesion_type)
           predicted_save = Image.fromarray(predicted_image)
           image = predicted_save.convert('RGB')
           image.save(f'media/predictions/lesion_images/predicted_{lesion_type}_image.jpg', "JPEG", quality=100)

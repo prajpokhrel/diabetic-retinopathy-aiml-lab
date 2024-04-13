@@ -26,8 +26,18 @@ def bce_dice_loss(y_true, y_pred):
     loss = losses.binary_crossentropy(y_true, y_pred) + dice_loss(y_true, y_pred)
     return loss
 
-def model():
-    model_path = 'detect_disease/predictions/models/hard_exudates_segmentation_model.keras'
+def model(lesion_type):
+    model_name = 'hard_exudates_segmentation_model.keras'
+    if lesion_type == 'HX':
+        model_name = 'hard_exudates_segmentation_model.keras'
+    elif lesion_type == 'HE':
+        model_name = 'haemorrhages_segmentation_model.keras'
+    elif lesion_type == 'SE':
+        model_name = 'soft_exudates_segmentation_model.keras'
+    elif lesion_type == 'MA':
+        model_name = 'microaneurysms_segmentation_model.keras'
+    
+    model_path = f'detect_disease/predictions/models/{model_name}'
     model = models.load_model(model_path, custom_objects={'bce_dice_loss': bce_dice_loss,
                                                           'dice_loss': dice_loss})
     return model
@@ -42,8 +52,8 @@ def save_predicted_image(predicted_image):
     # output_image.save(f'image{patch_id}.jpg', "JPEG", quality=100)
     return predicted_mask
 
-def predict_hx(image):
-    myModel = model()
+def predict_hx(image, lesion_type):
+    myModel = model(lesion_type)
     # image = tf.image.decode_jpeg(image, channels=3)
     image = tf.convert_to_tensor(image, dtype=tf.float32)
     image = tf.image.resize(image, (256, 256))/255.
@@ -53,7 +63,7 @@ def predict_hx(image):
     final_image = save_predicted_image(predicted_image)
     return final_image
 
-def generate_and_combine_patches(image):
+def generate_and_combine_patches(image, lesion_type):
     predicted_image = np.zeros((2848, 4288), dtype=float)
     for i in range(6): #10 or 6  [with stride, without stride]
         for j in range(9): #16 or 9
@@ -65,6 +75,6 @@ def generate_and_combine_patches(image):
                 top_x = 3776
             # image_crop = image[top_y:top_y+512, top_x:top_x+512]
             image_crop = image.crop((top_x, top_y, top_x + 512, top_y+512))
-            predicted_crop = predict_hx(image_crop)
+            predicted_crop = predict_hx(image_crop, lesion_type)
             predicted_image[top_y:top_y+512, top_x:top_x+512] = np.maximum(predicted_image[top_y:top_y+512, top_x:top_x+512], predicted_crop)
     return predicted_image

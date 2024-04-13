@@ -81,7 +81,7 @@ function Patients() {
       render: (data) => (
         <>
         <Flex wrap="wrap" gap="small">
-          <Button type="primary" size='large'>update</Button>
+          {/* <Button type="primary" size='large'>update</Button> */}
           <Button type="primary" onClick={() => deletePatients(data.id)} size='large' danger>delete</Button>
         </Flex>
         </>

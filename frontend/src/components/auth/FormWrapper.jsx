@@ -31,6 +31,7 @@ function FormWrapper({ route, method }) {
 
     const onFinish = async (values) => {
         console.log('Success:', values);
+        setErrors([]);
         try {
             const res = await api.post(route, {...values})
             // console.log(res);

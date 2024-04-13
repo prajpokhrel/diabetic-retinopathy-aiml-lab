@@ -5,6 +5,7 @@ import '../../assets/styles/detect-disease.css';
 import DR_Avatar from '../../assets/images/avatar_de.png';
 import DR_Image from '../../assets/images/retina_pic.jpg'
 import { Footer } from '../misc/Footer';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -14,18 +15,22 @@ const DetectDiseaseDashboard = () => {
     {
       title: 'MICROANEURYSMS',
       description: 'Description 1',
+      type: 'MA'
     },
     {
       title: 'HEMORRHAGES',
-      description: 'Description 2'
+      description: 'Description 2',
+      type: 'HE'
     },
     {
       title: 'SOFT EXUDATES',
-      description: 'Description 3'
+      description: 'Description 3',
+      type: 'SE'
     },
     {
       title: 'HARD EXUDATES',
-      description: 'Description 3'
+      description: 'Description 3',
+      type: 'HX'
     },
   ];
 
@@ -56,9 +61,10 @@ const DetectDiseaseDashboard = () => {
                     <>
                       <Col span={12}>
                         <Card className='card-column' title={<> <Avatar size='large' src={DR_Avatar} /> {item?.title}</>} bordered={false}>
-                          
                           <div className="row">
-                            <Button icon={<RightCircleOutlined />} type='primary' size='large' ghost>Diagnose</Button>
+                            <Link to={`/detect-disease?type=${item?.type}&title=${item?.title}`}>
+                              <Button style={{ width: '100%' }} icon={<RightCircleOutlined />} type='primary' size='large' ghost>Diagnose</Button>
+                            </Link>
                           </div>
                         </Card>
                       </Col>
